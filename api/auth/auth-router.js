@@ -56,6 +56,7 @@ function checkUsernameAndPassword(req, res, next) {
 
 function buildToken(user) {
   const payload = {
+    subject: user.id,
     username: user.username
   }
   const options = {
