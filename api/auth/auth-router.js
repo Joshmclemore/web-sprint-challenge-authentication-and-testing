@@ -25,7 +25,7 @@ async function checkUsernameFree(req, res, next) {
     if(!users.length) {
       next()
     } else {
-      res.json("username taken")
+      next({ status: 401, message: "username taken" })
     }
   } catch(error) {
     next(error)
@@ -36,7 +36,7 @@ async function checkUsernameExists(req, res, next) {
   try {
     const [user] = await db('users').where({username: req.body.username})
     if(!user) {
-      res.json("invalid credentials")
+      next({ status: 401, message: "invalid credentials" })
     } else {
       req.user = user
       next()
@@ -48,7 +48,7 @@ async function checkUsernameExists(req, res, next) {
 
 function checkUsernameAndPassword(req, res, next) {
   if(!req.body.password || !req.body.username) {
-    res.json("username and password required")
+    next({ status: 401, message: "username and password required" })
   } else {
     next()
   }

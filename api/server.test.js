@@ -49,7 +49,7 @@ describe('HTTP API tests', () => {
   })
   test('GET /api/jokes will reject a user without a token or with an invalid token', async () => {
     let res = await request(server).get('/api/jokes');
-    expect(res.body).toMatch("token required")
+    expect(res.body).toMatchObject({message: "token required"})
   })
   test('GET /api/jokes will return an array of jokes if user has a valid token', async () => {
     await request(server).post('/api/auth/register').send(testuser1)
